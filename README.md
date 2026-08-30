@@ -1,23 +1,89 @@
-# Concise
+<p align="center">
+  <img src="assets/logo.png" width="350" alt="Concise" />
+</p>
+<p align="center">
+  <img src="assets/ascii-logo.png" width="676" alt="Concise" />
+</p>
 
-Private, browser-only file utilities for crop, resize, trim, and conversion.
+<p align="center">
+  Private, browser-only tools for the small file jobs that should take seconds.
+</p>
 
-## Local development
+<p align="center">
+  <a href="https://concise.ai9an.com">concise.ai9an.com</a>
+</p>
+
+## What it is
+
+Concise is a static file utility site for cropping, resizing, trimming, and converting files. Every operation happens in the browser: files are never uploaded, stored remotely, or sent to an API.
+
+The core loop is deliberately short:
+
+```text
+open a local file → adjust it → export a local download
+```
+
+## Features
+ - image cropping
+ - image resizing (to maxium size or pixel count)
+ - file converting, [supported formats](#Formats)
+ - local-first
+ - fast exports with quality and format controls
+
+## Privacy and offline behavior
+
+- No file upload endpoint
+- No accounts or server-side storage
+- No analytics that receive file content
+- No runtime CDN dependency for FFmpeg: the multi-threaded core is copied into the static build
+- Once the page and its local processing assets are loaded, file work continues without a network connection
+
+## Formats
+
+### image:
+    jpeg, png, webp, avif, gif, bmp, tiff
+### video:
+    mp4, webm, mov, mkv, avi, gif
+### audio:
+    mp3, wav, ogg, flac, m4a
+
+
+## Run or test locally
+
+Requirements: Node.js 20+ and npm.
 
 ```sh
 npm install
 npm run dev
 ```
 
-The ffmpeg multi-threaded core is copied from `@ffmpeg/core-mt` into `public/ffmpeg-core` during installation and before every production build. No runtime CDN is required.
+### Quality checks
 
-## Cloudflare Pages
+```sh
+npm run typecheck
+npm run build
+```
 
-- Build command: `npm run build`
-- Build output directory: `dist`
-- Production branch: `main`
-- Custom domain: `concise.ai9an.com`
+## Project layout
 
-The root `_headers` file is copied into `dist` by Vite. It sets COOP and COEP for the cross-origin isolation required by multi-threaded ffmpeg.wasm.
+```text
+assets/                 Source brand assets
+public/ffmpeg-core/     Locally served multi-threaded FFmpeg core files
+src/
+  lib/ffmpeg.ts         FFmpeg loader and wrapper foundation
+  tools/                Crop, resize, trim, and conversion logic
+  ui/                   Dropzone, crop canvas, and settings UI
+  styles/               Global visual system
+_headers                Cloudflare Pages security and isolation headers
+wrangler.jsonc          Cloudflare Pages configuration
+```
 
-Direct deployment is also available with `npm run deploy` after authenticating Wrangler.
+## Contributing
+
+Keep file processing client-side. Do not add upload endpoints, server-side processing, account requirements, or tracking that can access user file content.
+
+Run `npm run typecheck` and `npm run build` before opening a pull request.
+
+## License
+
+Released under the [MIT License](LICENSE). Copyright © 2026 ai9an.

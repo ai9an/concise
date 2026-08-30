@@ -3,3 +3,6 @@ dist/
 .wrangler/
 *.log
 *.tsbuildinfo
+AGENTS.md
+PRODUCT.md
+TODO.md
