@@ -1,0 +1,32 @@
+{
+  "name": "concise",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "postinstall": "node scripts/copy-ffmpeg-core.mjs",
+    "prebuild": "node scripts/copy-ffmpeg-core.mjs",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b --pretty false",
+    "deploy": "npm run build && wrangler pages deploy dist --project-name concise"
+  },
+  "dependencies": {
+    "@ffmpeg/core-mt": "^0.12.10",
+    "@ffmpeg/ffmpeg": "^0.12.15",
+    "@ffmpeg/util": "^0.12.2",
+    "@fontsource/vt323": "^5.2.8",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@vitejs/plugin-react": "^5.1.4",
+    "typescript": "^5.9.3",
+    "vite": "^8.2.2",
+    "wrangler": "^4.62.0"
+  }
+}

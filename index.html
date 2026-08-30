@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Crop, resize, trim, and convert files privately in your browser." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Concise — local file tools</title>
+    <script>
+      try {
+        const saved = JSON.parse(localStorage.getItem('concise:settings') || '{}')
+        document.documentElement.dataset.theme = saved.theme || 'dark'
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <!--
+    THESIS: The active file holds still and bright while every tool recedes by depth; Concise refuses the boxed upload-dashboard template.
+    OWN-WORLD: Emissive black or paper-white ground, ivory bitmap type, ash depth steps, and a single amber signal with no decorative enclosure.
+    STORY: Open one local file, bring one operation forward, see its consequences, and export without the file leaving the browser.
+    FIRST VIEWPORT: Brand and utilities ride the top baseline; a huge open-file command occupies the front plane; privacy proof and the tool queue remain visible behind it.
+    FORM: Signal Queue, selected challenger from the second direction hand; seed cc1f6bc8.
+    FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+    -->
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

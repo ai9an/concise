@@ -1,0 +1,136 @@
+{
+  "title": "Choose Concise’s visual world — fresh hand",
+  "question": "This hand explores new territory. Choose a direction, re-roll again, or steer safer or bolder.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Typesetter’s Galley",
+      "kicker": "THE ROLL",
+      "lineage": "composing sticks, proof galleys, and movable type",
+      "thesis": "Each file is a live proof assembled on one precise galley, with adjustments set directly into its measure.",
+      "palette": ["#eee9dc", "#171713", "#2257d6", "#d64a2f"],
+      "materials": ["inked proof paper", "steel composing rules", "blue-pencil corrections"],
+      "viewport": "A large media proof occupies the galley while a narrow measure rail sets crop, dimensions, quality, and output in one vertical rhythm.",
+      "risk": "It can feel literary or print-bound unless motion and media previews keep the language contemporary.",
+      "raised": [
+        {"from": "Cracktro Queue", "raise": "The active proof is brighter and still while inactive tools recede by depth, never by extra boxes."},
+        {"from": "Ticket Wallet", "raise": "The route from source to export remains explicit and every completed state leaves a readable trace."},
+        {"from": "Teletext Service", "raise": "Dense values align to an exact character grid and keyboard access is first-class."},
+        {"from": "Star Atlas", "raise": "The user’s media stays dominant while annotations remain quiet, precise, and optional."}
+      ],
+      "wireframe": {"cols": 12, "rows": 10, "regions": [
+        {"label": "concise + tools", "x": 0, "y": 0, "w": 12, "h": 1},
+        {"label": "live proof", "x": 0, "y": 1, "w": 8, "h": 8, "accent": true},
+        {"label": "measure rail", "x": 8, "y": 1, "w": 4, "h": 8},
+        {"label": "source → export", "x": 0, "y": 9, "w": 12, "h": 1}
+      ]},
+      "comp": ".impeccable/mocks/decision/assigned-r2.webp"
+    },
+    {
+      "id": "model-pick",
+      "label": "Light Table",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "photographic contact sheets and illuminated editing tables",
+      "thesis": "The opened file becomes the luminous center of the room, with tools touching its edges and nothing competing with the work.",
+      "palette": ["#101110", "#f5f1e8", "#ffb000", "#696b67"],
+      "materials": ["backlit glass", "grease-pencil marks", "matte black rails"],
+      "viewport": "A bright media surface floats on a dark table with crop handles over the image and a low amber instrument rail beneath it.",
+      "risk": "It is a familiar professional editing metaphor and needs disciplined restraint to avoid resembling existing photo software.",
+      "wireframe": {"cols": 12, "rows": 10, "regions": [
+        {"label": "brand + utilities", "x": 0, "y": 0, "w": 12, "h": 1},
+        {"label": "illuminated media", "x": 1, "y": 1, "w": 10, "h": 7, "accent": true},
+        {"label": "instrument rail", "x": 1, "y": 8, "w": 10, "h": 1},
+        {"label": "file facts", "x": 1, "y": 9, "w": 10, "h": 1}
+      ]},
+      "comp": ".impeccable/mocks/decision/model-pick-r2.webp"
+    },
+    {
+      "id": "challenger-cracktro",
+      "label": "Signal Queue",
+      "verdict": "competitive",
+      "lineage": "cracktro title screens and depth-ranked work queues",
+      "thesis": "One bright line of work holds still in an emissive void while tools and previous states drift behind it by depth.",
+      "palette": ["#000000", "#e6e2d6", "#4a4a4a", "#ffb000"],
+      "materials": ["emissive black", "bitmap type", "layered dust fields"],
+      "viewport": "The filename and Open command sit bright and still across the center while Crop, Resize, Trim, and Convert occupy dimmer receding baselines.",
+      "case": "It strongly identifies with local digital work and makes focus unmistakable, but the single-face void carries less immediate precision than the galley.",
+      "risk": "The scene can read as developer tooling and the dark field may under-serve image comparison.",
+      "wireframe": {"cols": 12, "rows": 10, "regions": [
+        {"label": "receding tools", "x": 0, "y": 0, "w": 12, "h": 3},
+        {"label": "open file", "x": 0, "y": 3, "w": 12, "h": 4, "accent": true},
+        {"label": "file signal", "x": 0, "y": 7, "w": 12, "h": 2},
+        {"label": "command line", "x": 0, "y": 9, "w": 12, "h": 1}
+      ]},
+      "comp": ".impeccable/mocks/decision/challenger-cracktro-r2.webp",
+      "hero": "https://impeccable.style/worlds/cards/operate-c-cracktro-scroller-queue-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/operate-c-cracktro-scroller-queue.webp"
+    },
+    {
+      "id": "challenger-ticket",
+      "label": "Conversion Ticket",
+      "verdict": "competitive",
+      "lineage": "jet-age airline ticket wallets",
+      "thesis": "A file’s journey is a coupon book: source, adjustment, and export remain visible until the finished stub tears free.",
+      "palette": ["#0d1b3d", "#ffffff", "#d7262d", "#4b2e83"],
+      "materials": ["coupon stock", "carbon-copy figures", "perforated stubs"],
+      "viewport": "A crisp ticket wallet opens across the screen with the source on the left, live preview in the center, and export stub on the right.",
+      "case": "It makes the workflow exceptionally clear and memorable, but fewer users identify tickets with precise visual editing.",
+      "risk": "Journey language can become a theme layer that competes with direct utility labels.",
+      "wireframe": {"cols": 12, "rows": 10, "regions": [
+        {"label": "ticket header", "x": 0, "y": 0, "w": 12, "h": 2},
+        {"label": "source coupon", "x": 0, "y": 2, "w": 3, "h": 6},
+        {"label": "live coupon", "x": 3, "y": 2, "w": 6, "h": 6, "accent": true},
+        {"label": "export stub", "x": 9, "y": 2, "w": 3, "h": 6},
+        {"label": "route record", "x": 0, "y": 8, "w": 12, "h": 2}
+      ]},
+      "comp": ".impeccable/mocks/decision/challenger-ticket-r2.webp",
+      "hero": "https://impeccable.style/worlds/cards/vernacular-ephemera-jet-age-ticket-wallet-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/vernacular-ephemera-jet-age-ticket-wallet.webp"
+    },
+    {
+      "id": "challenger-teletext",
+      "label": "Utility Pages",
+      "verdict": "declined",
+      "lineage": "broadcast teletext magazines",
+      "thesis": "Every tool has a direct three-digit page inside a strict 40-by-24-cell utility magazine.",
+      "palette": ["#000000", "#ffffff", "#ffff00", "#00ffff", "#ff0000"],
+      "materials": ["bitmap cells", "block mosaics", "broadcast black"],
+      "viewport": "Page 100 indexes the tools while a large mosaic file preview waits beside direct page numbers.",
+      "case": "Direct addressing is fast, but rigid cells reduce preview fidelity and the language demands prior familiarity.",
+      "kept": "Values and shortcuts should align to an exact keyboard-friendly grid.",
+      "risk": "The broadcast reference can become retro novelty instead of a durable workspace."
+    },
+    {
+      "id": "challenger-atlas",
+      "label": "Media Atlas",
+      "verdict": "declined",
+      "lineage": "celestial star atlases",
+      "thesis": "Each file is a chart plate whose important dimensions, boundaries, and outputs appear as ranked coordinates.",
+      "palette": ["#08172d", "#f3f0df", "#e36b48", "#8295af"],
+      "materials": ["navy chart stock", "chalk-white points", "night annotations"],
+      "viewport": "The media fills a coordinate plate with crop bounds and output values plotted quietly around its brightest anchors.",
+      "case": "It gives the preview real dignity, but coordinate navigation overcomplicates a small set of obvious tools.",
+      "kept": "The media should dominate while technical annotations remain quiet and optional.",
+      "risk": "A beautiful map is still the wrong interaction model for quick file busywork."
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "buildPath": {"value": "code", "toggle": true},
+  "canon": true,
+  "canonCard": {
+    "label": "The category standard",
+    "thesis": "A centered upload area opens into a clean conventional media editor.",
+    "palette": ["#ffffff", "#111827", "#2563eb"],
+    "materials": ["neutral panels", "soft shadows", "standard controls"],
+    "viewport": "A centered headline and dashed dropzone sit above a grid of utility shortcuts.",
+    "risk": "Highly familiar, but indistinguishable from the file-tool sites Concise is meant to replace.",
+    "wireframe": {"cols": 12, "rows": 10, "regions": [
+      {"label": "nav", "x": 1, "y": 0, "w": 10, "h": 1},
+      {"label": "headline", "x": 2, "y": 1, "w": 8, "h": 2},
+      {"label": "dropzone", "x": 2, "y": 3, "w": 8, "h": 4, "accent": true},
+      {"label": "tool cards", "x": 1, "y": 7, "w": 10, "h": 3}
+    ]},
+    "comp": ".impeccable/mocks/decision/canon-r2.webp"
+  },
+  "steer": true
+}
