@@ -10,7 +10,8 @@
 </p>
 
 <p align="center">
-  <a href="https://concise.ai9an.com">concise.ai9an.com</a>
+  <a href="https://concise.ai9an.com">concise.ai9an.com</a> -
+  <a href="#preview">preview</a>
 </p>
 
 ## What it is
@@ -63,6 +64,11 @@ npm run dev
 npm run typecheck
 npm run build
 ```
+## Preview
+
+<p align="center">
+  <img src="assets/preview.png" width="4096" alt="Concise" />
+</p>
 
 ## Project layout
 
