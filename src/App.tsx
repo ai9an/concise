@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import asciiLogo from '../assets/ascii-logo.png'
 import type { CropRect, ImageAsset, ImageMime, Settings, ToolId } from './types'
 import { outputExtension, renderImage } from './tools/crop'
 import { formatSupport } from './tools/convert'
@@ -258,8 +259,8 @@ export function App() {
           setAsset(null)
           setStatus('waiting for a local file')
           setError('')
-        }} aria-label="Return to open file">
-          concise<span aria-hidden="true" />
+        }} aria-label="Return to open file — Concise">
+          <img className="wordmark-logo" src={asciiLogo} alt="" />
         </button>
         <nav className="tool-nav" aria-label="File tools">
           {(Object.keys(toolCopy) as ToolId[]).map((tool, index) => (

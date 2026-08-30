@@ -103,6 +103,7 @@ button:disabled {
   position: relative;
   isolation: isolate;
   min-height: 100vh;
+  overflow-x: clip;
   padding: 26px 34px 18px;
   background: var(--void);
 }
@@ -142,22 +143,22 @@ button:disabled {
 
 .wordmark {
   display: inline-flex;
-  align-items: baseline;
-  gap: 9px;
+  align-items: center;
   width: fit-content;
   padding: 0;
   border: 0;
-  color: var(--ivory);
   background: transparent;
-  font-size: var(--type-title);
-  line-height: 1;
-  letter-spacing: 0.04em;
+  transform: translateY(12px);
 }
 
-.wordmark span {
-  width: 9px;
-  height: 9px;
-  background: var(--signal);
+.wordmark-logo {
+  display: block;
+  width: clamp(144px, 13vw, 190px);
+  height: auto;
+}
+
+:root[data-theme='light'] .wordmark-logo {
+  filter: brightness(0.18) contrast(1.35);
 }
 
 .tool-nav {
