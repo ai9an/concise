@@ -84,6 +84,6 @@ Keep file processing client-side. Do not add upload endpoints, server-side proce
 
 Run `npm run typecheck` and `npm run build` before opening a pull request.
 
-## License
+## 
 
-Released under the [MIT License](LICENSE). Copyright © 2026 ai9an.
+built with [codex](github.com/openai/codex) and [impeccable](https://github.com/pbakaus/impeccable)
