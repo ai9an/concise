@@ -10,7 +10,7 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b --pretty false",
-    "deploy": "npm run build && wrangler pages deploy dist --project-name concise"
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "@ffmpeg/core-mt": "^0.12.10",

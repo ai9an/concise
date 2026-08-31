@@ -64,6 +64,27 @@ npm run dev
 npm run typecheck
 npm run build
 ```
+
+## Deploy to Cloudflare
+
+Concise deploys as a Workers Static Assets project. It does not run application code on a server; Cloudflare only serves the files produced in `dist`.
+
+For a Git-connected Cloudflare project, use:
+
+```text
+Build command:  npm run build
+Deploy command: npx wrangler deploy
+Production branch: main
+```
+
+The deploy command reads `wrangler.jsonc`, uploads `dist`, and applies the `_headers` rules required by multi-threaded FFmpeg. To deploy from your own computer instead, authenticate Wrangler and run:
+
+```sh
+npm run deploy
+```
+
+After the first successful deployment, add `concise.ai9an.com` under the Worker's custom domains. Do not configure a separate asset directory or Worker entry point in the dashboard; both are defined by `wrangler.jsonc`.
+
 ## Preview
 
 <p align="center">
@@ -80,8 +101,8 @@ src/
   tools/                Crop, resize, trim, and conversion logic
   ui/                   Dropzone, crop canvas, and settings UI
   styles/               Global visual system
-_headers                Cloudflare Pages security and isolation headers
-wrangler.jsonc          Cloudflare Pages configuration
+_headers                Cloudflare security and isolation headers
+wrangler.jsonc          Workers Static Assets configuration
 ```
 
 ## Contributing
