@@ -16,7 +16,13 @@ export function SettingsPanel({ settings, onChange }: SettingsPanelProps) {
           <span>theme</span>
           <select value={settings.theme} onChange={(event) => update('theme', event.target.value as Theme)}>
             <option value="dark">dark signal</option>
+            <option value="graphite">graphite</option>
+            <option value="ember">dark ember</option>
+            <option value="midnight">midnight blue</option>
+            <option value="forest">night forest</option>
+            <option value="plum">deep plum</option>
             <option value="light">light signal</option>
+            <option value="paper">warm paper</option>
           </select>
         </label>
         <label>

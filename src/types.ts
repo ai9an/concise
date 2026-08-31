@@ -17,7 +17,7 @@ export type ToolId = 'crop' | 'resize' | 'trim' | 'convert'
 
 export type ImageMime = 'image/jpeg' | 'image/png' | 'image/webp'
 
-export type Theme = 'dark' | 'light'
+export type Theme = 'dark' | 'graphite' | 'ember' | 'midnight' | 'forest' | 'plum' | 'light' | 'paper'
 
 export type Settings = {
   version: 1

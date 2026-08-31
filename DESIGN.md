@@ -16,7 +16,7 @@ colors:
   light-void: "#f0eee7"
   light-plane: "#e6e3da"
   light-ash: "#9b9991"
-  light-dust: "#74726b"
+  light-dust: "#6c6a63"
   light-frost: "#4f4e49"
   light-ivory: "#1a1a18"
   light-signal: "#b85e00"
@@ -109,6 +109,8 @@ The system refuses the boxed upload-dashboard convention. Structure comes from b
 **Key Characteristics:**
 
 - One front plane is bright and still; subordinate tools step back through ash values and spatial depth.
+- The full-resolution hand mark rests against the bottom-right edge as a low-opacity background watermark, behind the moving dust field.
+- Copy that crosses the hand mark uses a restrained void-colored halo and translucent working plane so both the words and watermark retain their form.
 - Ivory bitmap type carries both identity and utility, with tabular figures for file facts and coordinates.
 - Amber is a scarce signal for the current path, local-only proof, crop handles, and completion.
 - Controls are exposed in the workspace rather than wrapped in dashboard cards.
@@ -141,6 +143,10 @@ The palette is an achromatic depth ladder interrupted by one warm amber signal; 
 **The One Signal Rule.** Amber identifies action, focus, locality, progress, or success. Do not turn it into ambient decoration or a second background color.
 
 **The Semantic Mirror Rule.** Dark and light modes must preserve role contrast and hierarchy, not merely invert the page.
+
+### Theme atmospheres
+
+The semantic ladder is available in eight atmospheres without changing layout or interaction: dark signal, graphite, dark ember, midnight blue, night forest, deep plum, light signal, and warm paper. Each atmosphere owns one signal hue and remaps every neutral role for readable contrast; themes are environments, not isolated accent swaps.
 
 ## Typography
 

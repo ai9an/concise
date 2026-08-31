@@ -10,6 +10,16 @@ import { Dropzone } from './ui/Dropzone'
 import { SettingsPanel } from './ui/SettingsPanel'
 
 const settingsKey = 'concise:settings'
+const themeColors: Record<Settings['theme'], string> = {
+  dark: '#000000',
+  graphite: '#171816',
+  ember: '#190b05',
+  midnight: '#071018',
+  forest: '#07120d',
+  plum: '#140b18',
+  light: '#f0eee7',
+  paper: '#f4ead8',
+}
 const defaultSettings: Settings = {
   version: 1,
   theme: 'dark',
@@ -101,7 +111,7 @@ export function App() {
 
   useEffect(() => {
     document.documentElement.dataset.theme = settings.theme
-    document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')?.setAttribute('content', settings.theme === 'dark' ? '#000000' : '#f0eee7')
+    document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')?.setAttribute('content', themeColors[settings.theme] ?? themeColors.dark)
     localStorage.setItem(settingsKey, JSON.stringify(settings))
   }, [settings])
 

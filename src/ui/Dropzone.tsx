@@ -6,6 +6,7 @@ type DropzoneProps = {
 
 export function Dropzone({ onFile }: DropzoneProps) {
   const inputRef = useRef<HTMLInputElement>(null)
+  const dragDepth = useRef(0)
   const [dragging, setDragging] = useState(false)
 
   const takeFirst = (files: FileList | null) => {
@@ -18,18 +19,23 @@ export function Dropzone({ onFile }: DropzoneProps) {
       className={`drop-plane${dragging ? ' is-dragging' : ''}`}
       onDragEnter={(event) => {
         event.preventDefault()
+        dragDepth.current += 1
         setDragging(true)
       }}
       onDragOver={(event) => event.preventDefault()}
       onDragLeave={(event) => {
-        if (event.currentTarget === event.target) setDragging(false)
+        event.preventDefault()
+        dragDepth.current = Math.max(0, dragDepth.current - 1)
+        if (dragDepth.current === 0) setDragging(false)
       }}
       onDrop={(event) => {
         event.preventDefault()
+        dragDepth.current = 0
         setDragging(false)
         takeFirst(event.dataTransfer.files)
       }}
     >
+      <span className="drop-corners" aria-hidden="true" />
       <button className="open-command" type="button" onClick={() => inputRef.current?.click()}>
         <span aria-hidden="true">&gt;</span>
         <span>drop the file.</span>
