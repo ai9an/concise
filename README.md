@@ -16,7 +16,7 @@
 
 ## What it is
 
-Concise is a static file utility site for cropping, resizing, trimming, and converting files. Every operation happens in the browser: files are never uploaded, stored remotely, or sent to an API.
+Concise is a static utility site for quick media, code, and writing jobs. Every operation happens in the browser: files are never uploaded, stored remotely, or sent to an API.
 
 The core loop is deliberately short:
 
@@ -28,6 +28,14 @@ open a local file → adjust it → export a local download
  - image cropping
  - image resizing (to maxium size or pixel count)
  - file converting, [supported formats](#Formats)
+ - plain-background removal with transparent or green-screen PNG export
+ - optional local AI matte background removal with a cached, browser-run model
+ - metadata inspection plus lossless stripping for common images, media, PDF, and office documents
+ - QR generation with optional centre images
+ - Base64, URL, hex, cipher, hashing, and AES-256-GCM tools
+ - Markdown editing with a sanitised live preview and README cheatsheet
+ - case conversion for prose and developer naming styles
+ - configurable FIGlet ASCII lettering with shared per-glyph colour fades, transparent still PNG, and executable ANSI animations for Bash/Konsole or Python
  - local-first
  - fast exports with quality and format controls
 
@@ -37,6 +45,7 @@ open a local file → adjust it → export a local download
 - No accounts or server-side storage
 - No analytics that receive file content
 - No runtime CDN dependency for FFmpeg: the multi-threaded core is copied into the static build and split into two deploy-safe WASM chunks
+- Precise background removal downloads its permissively licensed model from Hugging Face on first use; the model is cached and inference remains on-device
 - Once the page and its local processing assets are loaded, file work continues without a network connection
 
 ## Formats
@@ -98,9 +107,9 @@ assets/                 Source brand assets
 public/ffmpeg-core/     Locally served multi-threaded FFmpeg core files
 src/
   lib/ffmpeg.ts         FFmpeg loader and wrapper foundation
-  tools/                Crop, resize, trim, and conversion logic
-  ui/                   Dropzone, crop canvas, and settings UI
-  styles/               Global visual system
+  tools/                Media processing and text-codec logic
+  ui/                   Editors, generators, navigation, and shared UI
+  styles/               Global visual system and utility workspaces
 _headers                Cloudflare security and isolation headers
 wrangler.jsonc          Workers Static Assets configuration
 ```

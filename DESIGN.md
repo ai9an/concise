@@ -212,8 +212,8 @@ Crop geometry is the one drawn overlay: a two-pixel amber rectangle, one-pixel i
 
 ### Tool Navigation
 
-- **Style:** Transparent labels spaced across a single queue. Inactive items use distant dust; the active item moves to ivory and gains an amber `>` prefix.
-- **State:** Hover and active states increase tracking to 0.09em over 180ms. On narrow screens the queue scrolls horizontally rather than wrapping into buttons or a menu.
+- **Style:** A two-level signal queue. The upper row selects a tool group using restrained amber brackets; the lower row contains that group's transparent tool labels. Inactive items use distant dust; the active tool moves to ivory and gains an amber `>` prefix.
+- **State:** Hover and active states increase tracking over 180ms. On narrow screens each row scrolls horizontally rather than wrapping into buttons or a menu.
 
 ### Option Lines
 

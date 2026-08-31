@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { lazy, Suspense, useEffect, useMemo, useState } from 'react'
 import asciiLogo from '../assets/ascii-logo.png'
 import type { CropRect, ImageAsset, ImageMime, Settings, ToolId, VideoAsset } from './types'
 import { outputExtension, renderImage } from './tools/crop'
@@ -8,7 +8,16 @@ import { createVideoPreview } from './tools/trim'
 import { CropCanvas } from './ui/CropCanvas'
 import { Dropzone } from './ui/Dropzone'
 import { SettingsPanel } from './ui/SettingsPanel'
+import { ToolNavigation } from './ui/ToolNavigation'
 import { VideoEditor } from './ui/VideoEditor'
+
+const BackgroundTool = lazy(() => import('./ui/BackgroundTool'))
+const MetadataTool = lazy(() => import('./ui/MetadataTool'))
+const CryptoTool = lazy(() => import('./ui/CryptoTool'))
+const MarkdownTool = lazy(() => import('./ui/MarkdownTool'))
+const QrTool = lazy(() => import('./ui/QrTool'))
+const CaseTool = lazy(() => import('./ui/CaseTool'))
+const AsciiTool = lazy(() => import('./ui/AsciiTool'))
 
 const settingsKey = 'concise:settings'
 const themeColors: Record<Settings['theme'], string> = {
@@ -39,12 +48,7 @@ const aspectOptions = [
   { label: '16:9', value: 16 / 9 },
 ] as const
 
-const toolCopy: Record<ToolId, string> = {
-  crop: 'crop',
-  resize: 'resize',
-  trim: 'trim',
-  convert: 'convert',
-}
+const utilityTools = new Set<ToolId>(['background', 'metadata', 'qr', 'crypto', 'markdown', 'case', 'ascii'])
 
 function readSettings(): Settings {
   try {
@@ -172,6 +176,7 @@ export function App() {
     width: Math.round(crop.width),
     height: Math.round(crop.height),
   }), [crop])
+  const isUtilityTool = utilityTools.has(activeTool)
 
   const chooseTool = (tool: ToolId) => {
     setActiveTool(tool)
@@ -336,6 +341,7 @@ export function App() {
     <div className="app-shell">
       <header className="top-line">
         <button className="wordmark" type="button" onClick={() => {
+          setActiveTool('crop')
           setFile(null)
           setAsset(null)
           setVideoAsset(null)
@@ -345,25 +351,27 @@ export function App() {
         }} aria-label="Return to open file — Concise">
           <img className="wordmark-logo" src={asciiLogo} alt="" />
         </button>
-        <nav className="tool-nav" aria-label="File tools">
-          {(Object.keys(toolCopy) as ToolId[]).map((tool, index) => (
-            <button
-              key={tool}
-              type="button"
-              className={activeTool === tool ? 'is-active' : ''}
-              style={{ '--depth': index } as React.CSSProperties}
-              onClick={() => chooseTool(tool)}
-              aria-current={activeTool === tool ? 'page' : undefined}
-            >
-              {toolCopy[tool]}
-            </button>
-          ))}
-        </nav>
+        <ToolNavigation activeTool={activeTool} onToolChange={chooseTool} />
         <SettingsPanel settings={settings} onChange={setSettings} />
       </header>
 
       <main>
-        {!file ? (
+        {isUtilityTool ? (
+          <Suspense fallback={(
+            <section className="utility-loading" role="status">
+              <h1>loading tool.</h1>
+              <p>The local workspace is moving to the front plane.</p>
+            </section>
+          )}>
+            {activeTool === 'background' ? <BackgroundTool initialFile={asset?.file} /> : null}
+            {activeTool === 'metadata' ? <MetadataTool /> : null}
+            {activeTool === 'qr' ? <QrTool /> : null}
+            {activeTool === 'crypto' ? <CryptoTool /> : null}
+            {activeTool === 'markdown' ? <MarkdownTool /> : null}
+            {activeTool === 'case' ? <CaseTool /> : null}
+            {activeTool === 'ascii' ? <AsciiTool /> : null}
+          </Suspense>
+        ) : !file ? (
           <div className="landing">
             <div className="depth-copy" aria-hidden="true">
               <span>crop precisely</span>
@@ -437,7 +445,7 @@ export function App() {
                   ) : (
                     <>
                       <div className="control-heading">
-                        <h1>resize.</h1>
+                        <h1>resize/compress.</h1>
                         <p>Set the dimensions or make a strict size ceiling.</p>
                       </div>
                       <div className="mode-line" role="group" aria-label="Resize mode">
@@ -526,7 +534,12 @@ export function App() {
 
       <footer className="status-line">
         <span aria-live="polite" className={error ? 'is-error' : ''}>{error || status}</span>
-        <span>concise.ai9an.com</span>
+        <span className="status-links">
+          <span>concise.ai9an.com</span>
+          <a href="https://github.com/ai9an/concise" target="_blank" rel="noreferrer">
+            view source on github
+          </a>
+        </span>
       </footer>
     </div>
   )

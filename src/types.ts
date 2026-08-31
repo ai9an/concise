@@ -21,7 +21,9 @@ export type VideoAsset = {
   duration: number
 }
 
-export type ToolId = 'crop' | 'resize' | 'trim' | 'convert'
+export type ToolId = 'crop' | 'resize' | 'trim' | 'convert' | 'background' | 'metadata' | 'qr' | 'crypto' | 'markdown' | 'case' | 'ascii'
+
+export type ToolGroupId = 'media' | 'code' | 'write'
 
 export type ImageMime = 'image/jpeg' | 'image/png' | 'image/webp'
 

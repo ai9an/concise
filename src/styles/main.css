@@ -577,6 +577,25 @@ main {
   color: var(--danger);
 }
 
+.status-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.status-links a {
+  color: var(--frost);
+  text-decoration-color: var(--ash);
+  text-underline-offset: 3px;
+  transition: color 140ms ease, text-decoration-color 140ms ease;
+}
+
+.status-links a:hover,
+.status-links a:focus-visible {
+  color: var(--ivory);
+  text-decoration-color: var(--signal);
+}
+
 .workspace {
   min-height: calc(100vh - 120px);
   padding-top: 30px;
@@ -1377,6 +1396,11 @@ progress::-moz-progress-bar {
     align-items: flex-start;
     flex-direction: column;
     gap: 6px;
+  }
+
+  .status-links {
+    flex-wrap: wrap;
+    gap: 6px 18px;
   }
 
   .mobile-export {
