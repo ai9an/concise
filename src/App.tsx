@@ -1,13 +1,14 @@
 import { useEffect, useMemo, useState } from 'react'
 import asciiLogo from '../assets/ascii-logo.png'
-import type { CropRect, ImageAsset, ImageMime, Settings, ToolId } from './types'
+import type { CropRect, ImageAsset, ImageMime, Settings, ToolId, VideoAsset } from './types'
 import { outputExtension, renderImage } from './tools/crop'
 import { formatSupport } from './tools/convert'
 import { resizeToTarget } from './tools/resize'
-import { trimSupport } from './tools/trim'
+import { createVideoPreview } from './tools/trim'
 import { CropCanvas } from './ui/CropCanvas'
 import { Dropzone } from './ui/Dropzone'
 import { SettingsPanel } from './ui/SettingsPanel'
+import { VideoEditor } from './ui/VideoEditor'
 
 const settingsKey = 'concise:settings'
 const themeColors: Record<Settings['theme'], string> = {
@@ -85,6 +86,36 @@ function downloadBlob(blob: Blob, name: string) {
   window.setTimeout(() => URL.revokeObjectURL(url), 1000)
 }
 
+const videoExtensionPattern = /\.(mp4|webm|mov|mkv|avi|m4v|ogv)$/i
+
+function isVideoFile(file: File) {
+  return file.type.startsWith('video/') || videoExtensionPattern.test(file.name)
+}
+
+function readVideoAsset(file: File): Promise<VideoAsset> {
+  const objectUrl = URL.createObjectURL(file)
+  return new Promise((resolve, reject) => {
+    const video = document.createElement('video')
+    video.preload = 'metadata'
+    video.muted = true
+    video.onloadedmetadata = () => {
+      if (!Number.isFinite(video.duration) || video.duration <= 0 || video.videoWidth <= 0 || video.videoHeight <= 0) {
+        URL.revokeObjectURL(objectUrl)
+        reject(new Error('This video does not expose a usable duration or frame size.'))
+        return
+      }
+      resolve({ file, objectUrl, width: video.videoWidth, height: video.videoHeight, duration: video.duration })
+      video.removeAttribute('src')
+      video.load()
+    }
+    video.onerror = () => {
+      URL.revokeObjectURL(objectUrl)
+      reject(new Error('This browser cannot preview that video. Try an MP4, WebM, or MOV source.'))
+    }
+    video.src = objectUrl
+  })
+}
+
 export function App() {
   const [settings, setSettings] = useState<Settings>(() => readSettings())
   const [activeTool, setActiveTool] = useState<ToolId>(() => {
@@ -93,6 +124,9 @@ export function App() {
   })
   const [file, setFile] = useState<File | null>(null)
   const [asset, setAsset] = useState<ImageAsset | null>(null)
+  const [videoAsset, setVideoAsset] = useState<VideoAsset | null>(null)
+  const [videoLoading, setVideoLoading] = useState(false)
+  const [videoLoadProgress, setVideoLoadProgress] = useState<number | null>(null)
   const [crop, setCrop] = useState<CropRect>({ x: 0, y: 0, width: 1, height: 1 })
   const [aspect, setAspect] = useState<number | null>(null)
   const [aspectLabel, setAspectLabel] = useState('free')
@@ -127,6 +161,10 @@ export function App() {
     }
   }, [asset])
 
+  useEffect(() => () => {
+    if (videoAsset) URL.revokeObjectURL(videoAsset.objectUrl)
+  }, [videoAsset])
+
   const sourceAspect = crop.width / crop.height
   const roundedCrop = useMemo(() => ({
     x: Math.round(crop.x),
@@ -147,11 +185,42 @@ export function App() {
     setFile(nextFile)
     setStatus('reading the file locally')
 
+    if (isVideoFile(nextFile)) {
+      setAsset(null)
+      setVideoAsset(null)
+      setVideoLoading(true)
+      setVideoLoadProgress(null)
+      chooseTool('trim')
+      let nextVideoAsset: VideoAsset | null = null
+      try {
+        setStatus('reading video details locally')
+        nextVideoAsset = await readVideoAsset(nextFile)
+        setStatus('creating a 480p · 15 fps working preview')
+        const preview = await createVideoPreview(nextFile, (value) => {
+          setVideoLoadProgress(value)
+          setStatus(`creating a 480p · 15 fps working preview · ${Math.round(value * 100)}%`)
+        })
+        const previewUrl = URL.createObjectURL(preview)
+        URL.revokeObjectURL(nextVideoAsset.objectUrl)
+        setVideoAsset({ ...nextVideoAsset, objectUrl: previewUrl })
+        nextVideoAsset = null
+        setStatus('preview ready · original file untouched')
+      } catch (cause) {
+        if (nextVideoAsset) URL.revokeObjectURL(nextVideoAsset.objectUrl)
+        setError(cause instanceof Error ? `${cause.message} Try reloading the page, then open the video again.` : 'That video could not be prepared. Reload the page and try again.')
+        setStatus('video could not be opened')
+      } finally {
+        setVideoLoading(false)
+      }
+      return
+    }
+
     if (!nextFile.type.startsWith('image/')) {
       setAsset(null)
-      const tool: ToolId = nextFile.type.startsWith('video/') ? 'trim' : 'convert'
-      chooseTool(tool)
-      setStatus('file held locally · media engine is next in the queue')
+      setVideoAsset(null)
+      setVideoLoading(false)
+      chooseTool('convert')
+      setStatus('file held locally · conversion engine is next in the queue')
       return
     }
 
@@ -161,6 +230,8 @@ export function App() {
         Promise.resolve(URL.createObjectURL(nextFile)),
       ])
       const nextAsset = { file: nextFile, bitmap, objectUrl, width: bitmap.width, height: bitmap.height }
+      setVideoAsset(null)
+      setVideoLoading(false)
       const fullCrop = { x: 0, y: 0, width: bitmap.width, height: bitmap.height }
       setAsset(nextAsset)
       setCrop(fullCrop)
@@ -267,6 +338,8 @@ export function App() {
         <button className="wordmark" type="button" onClick={() => {
           setFile(null)
           setAsset(null)
+          setVideoAsset(null)
+          setVideoLoading(false)
           setStatus('waiting for a local file')
           setError('')
         }} aria-label="Return to open file — Concise">
@@ -308,10 +381,15 @@ export function App() {
         ) : (
           <div className="workspace">
             <section className="file-line" aria-label="Current file">
-              <button type="button" onClick={() => setFile(null)}>&gt; replace</button>
+              <button type="button" onClick={() => {
+                setFile(null)
+                setAsset(null)
+                setVideoAsset(null)
+                setVideoLoading(false)
+              }}>&gt; replace</button>
               <span className="file-name" title={file.name}>{file.name}</span>
               <span>{formatBytes(file.size)}</span>
-              <span>{asset ? `${asset.width} × ${asset.height}` : file.type || 'unknown type'}</span>
+              <span>{asset ? `${asset.width} × ${asset.height}` : videoAsset ? `${videoAsset.width} × ${videoAsset.height}` : file.type || 'unknown type'}</span>
               <span className="local-mark">local only</span>
             </section>
 
@@ -411,11 +489,22 @@ export function App() {
                   </div>
                 </aside>
               </div>
+            ) : videoLoading && activeTool === 'trim' ? (
+              <section className="video-loading" role="status" aria-live="polite">
+                <div>
+                  <h1>preparing preview.</h1>
+                  <p>{status}</p>
+                  <p className="loading-detail">A lighter working copy is being made in this browser. The original file stays untouched and will be used for export.</p>
+                  {videoLoadProgress === null ? <progress aria-label="Loading the local video engine" /> : <progress value={videoLoadProgress} max="1">{Math.round(videoLoadProgress * 100)}%</progress>}
+                </div>
+              </section>
+            ) : videoAsset && activeTool === 'trim' ? (
+              <VideoEditor asset={videoAsset} onStatusChange={setStatus} onError={setError} />
             ) : (
               <section className="queued-tool">
                 <h1>{activeTool}.</h1>
                 {activeTool === 'trim' ? (
-                  <><p>{trimSupport.label}</p><p>{trimSupport.detail}</p></>
+                  <p>Open a video to trim its timeline and crop its frame.</p>
                 ) : activeTool === 'convert' ? (
                   <>
                     <p>The local conversion engine is scaffolded after crop and resize.</p>

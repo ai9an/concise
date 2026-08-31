@@ -1,13 +1,15 @@
-import type { FFmpeg } from '@ffmpeg/ffmpeg'
+import { FFmpeg } from '@ffmpeg/ffmpeg'
 
 let instance: FFmpeg | null = null
 let loading: Promise<FFmpeg> | null = null
+let progressHandler: ((progress: number) => void) | undefined
 
 export function isMultithreadedFfmpegAvailable() {
   return window.crossOriginIsolated && typeof SharedArrayBuffer !== 'undefined'
 }
 
 export function getFfmpeg(onProgress?: (progress: number) => void) {
+  progressHandler = onProgress
   if (instance?.loaded) return Promise.resolve(instance)
   if (loading) return loading
 
@@ -16,9 +18,8 @@ export function getFfmpeg(onProgress?: (progress: number) => void) {
       throw new Error('Fast media tools need cross-origin isolation. Open the deployed Cloudflare Pages build or use the local preview server.')
     }
 
-    const { FFmpeg } = await import('@ffmpeg/ffmpeg')
     const ffmpeg = new FFmpeg()
-    ffmpeg.on('progress', ({ progress }) => onProgress?.(progress))
+    ffmpeg.on('progress', ({ progress }) => progressHandler?.(progress))
     const base = new URL('/ffmpeg-core/', window.location.origin)
     await ffmpeg.load({
       coreURL: new URL('ffmpeg-core.js', base).toString(),

@@ -3,7 +3,16 @@ import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+const isolationHeaders = {
+  'Cross-Origin-Opener-Policy': 'same-origin',
+  'Cross-Origin-Embedder-Policy': 'require-corp',
+  'Cross-Origin-Resource-Policy': 'same-origin',
+}
+
 export default defineConfig({
+  optimizeDeps: { exclude: ['@ffmpeg/ffmpeg'] },
+  server: { headers: isolationHeaders },
+  preview: { headers: isolationHeaders },
   plugins: [
     react(),
     {
