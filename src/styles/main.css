@@ -414,8 +414,8 @@ main {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  width: min(900px, 82vw);
-  min-height: clamp(150px, 18vw, 220px);
+  width: min(750px, 82vw);
+  min-height: clamp(150px, 16vw, 220px);
   padding: clamp(28px, 5vw, 66px) clamp(22px, 4vw, 54px);
   border: 1px solid var(--ash);
   background: color-mix(in srgb, var(--plane) 68%, transparent);

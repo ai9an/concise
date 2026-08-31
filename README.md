@@ -36,7 +36,7 @@ open a local file → adjust it → export a local download
 - No file upload endpoint
 - No accounts or server-side storage
 - No analytics that receive file content
-- No runtime CDN dependency for FFmpeg: the multi-threaded core is copied into the static build
+- No runtime CDN dependency for FFmpeg: the multi-threaded core is copied into the static build and split into two deploy-safe WASM chunks
 - Once the page and its local processing assets are loaded, file work continues without a network connection
 
 ## Formats
